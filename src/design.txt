@@ -1,0 +1,9 @@
+Views:
+1. AccountsView : the landing screen, shows all accounts and allows users 
+	to add, modify, and delete the accounts
+2. LedgerView: main page after user has chosen account, add, modify, and delete
+	transactions, categories, and bank accounts
+
+DB tables:
+1. Ledgers(id(INT auto-inc), balance,(DOUBLE) categories(TEXT), 
+2. Transactions(id, LedgerId, amount, category, descripton,)
