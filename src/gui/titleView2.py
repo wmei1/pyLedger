@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'titleView.ui'
+# Form implementation generated from reading ui file 'gui/titleView2.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,11 +11,17 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1280, 720)
+        MainWindow.resize(582, 480)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMaximumSize(QtCore.QSize(1280, 720))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setContentsMargins(370, 15, 370, 100)
+        self.verticalLayout.setContentsMargins(9, 15, 9, 15)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
