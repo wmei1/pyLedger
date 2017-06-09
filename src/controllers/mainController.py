@@ -30,7 +30,7 @@ class mainWindow(QtWidgets.QWidget, titleView.Ui_Form):
         widget.setObjectName("addBar")
         self.widgetText = QtWidgets.QLineEdit()
         self.widgetText.setObjectName("lineEdit")
-        self.widgetText.setPlaceholderText("Test")
+        self.widgetText.setPlaceholderText("My Ledger")
         self.widgetBtn = QtWidgets.QPushButton("Add New Ledger")
         self.widgetBtn.setObjectName("addBtn")
         widgetLayout = QtWidgets.QHBoxLayout()
@@ -50,10 +50,8 @@ class mainWindow(QtWidgets.QWidget, titleView.Ui_Form):
         self.listWidget.setItemWidget(newItem, widget)
         self.widgetBtn.clicked.connect(self.addLedger)
         self.listWidget.itemClicked.connect(self.itemClicked)
-        #self.listWidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        #self.listWidget.customContextMenuRequested.connect(self.onRightClick)
 
-        
+
     def addLedger(self):
         name = self.widgetText.text()
         if name:
@@ -65,19 +63,18 @@ class mainWindow(QtWidgets.QWidget, titleView.Ui_Form):
             self.initLedgers()
         else:
             print("empty")
+            self.widgetText.setPlaceholderText("invalid name")
+
     def contextMenuEvent(self, event):
-        print("contextMenu: ", self.listWidget.itemAt(event.x()-11, event.y()-71).text())
-        selectedItem = self.listWidget.itemAt(event.x()-11, event.y()-71).toolTip()
-        if not selectedItem == "addBar":
-            item = self.listWidget.itemAt(event.x()-11, event.y()-71)
+        selectedItem = self.listWidget.itemAt(event.x()-11, event.y()-71)
+        if not selectedItem.toolTip() == "addBar":
             menu = QtWidgets.QMenu(self)
             deleteAction = menu.addAction("Delete")
             action = menu.exec_(self.mapToGlobal(event.pos()))
             if action == deleteAction:
-                row = self.listWidget.row(item)
+                row = self.listWidget.row(selectedItem)
                 self.listWidget.takeItem(row)
                 del mainWindow.ledgerList[row]
-        #self.listWidget.takeItem(self.listWidget.itemAt(event.pos()).row())
 
     def itemClicked(self,item):
         if QtWidgets.qApp.mouseButtons() & QtCore.Qt.RightButton:
