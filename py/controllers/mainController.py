@@ -1,7 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 #from PyQt5.QtWidgets import QLayout, QLineEdit
-import sys
+import sys  
 import os
+import pickle
 import pdb
 import gui.titleView as titleView
 import gui.budgetView as budgetView
@@ -58,8 +59,8 @@ class mainWindow(QtWidgets.QWidget, titleView.Ui_Form):
             print(name)
             self.listWidget.clear()
             mainWindow.ledgerList.insert(len(mainWindow.ledgerList), name)
-            for item in mainWindow.ledgerList:
-                self.listWidget.addItem(item)
+            #for item in mainWindow.ledgerList:
+            #    self.listWidget.addItem(item)
             self.initLedgers()
         else:
             print("empty")
@@ -75,13 +76,14 @@ class mainWindow(QtWidgets.QWidget, titleView.Ui_Form):
                 row = self.listWidget.row(selectedItem)
                 self.listWidget.takeItem(row)
                 del mainWindow.ledgerList[row]
+                #print(len(mainWindow.ledgerList))
 
     def itemClicked(self,item):
-        if QtWidgets.qApp.mouseButtons() & QtCore.Qt.RightButton:
-            print("Right Clicked")
         self.window.central_widget = QtWidgets.QWidget()
-        self.window.setCentralWidget(budgetWidget(self.window))
         mainWindow.item = item.text()
+        self.window.setCentralWidget(budgetWidget(self.window))
+        
+        print('click:'+mainWindow.item)
     
 
 class budgetWidget(QtWidgets.QWidget, budgetView.Ui_pyLedger):
@@ -91,6 +93,7 @@ class budgetWidget(QtWidgets.QWidget, budgetView.Ui_pyLedger):
         self.window = window
         self.setupUi(self)
         self.btnLedger.setText(mainWindow.item)
+        print(mainWindow.item)
         self.btnLedger.clicked.connect(self.backToLedgers)
 
     def backToLedgers(self):
@@ -116,9 +119,16 @@ def initWindow():
 
 
 def __init__():
+    if( os.path.isfile('./ledgerList.p') ):
+        mainWindow.ledgerList=pickle.load(open("./ledgerList.p","rb"))
+        print('loading')
+        print(mainWindow.ledgerList)
+        
     app = QtWidgets.QApplication(sys.argv)
     window = initWindow()
     window.show()
     app.exec_()
+    pickle.dump(mainWindow.ledgerList,open("ledgerList.p","wb"))
+    print(mainWindow.ledgerList)
 
 
